@@ -67,7 +67,12 @@ void dealloc(Node* head)
 //   function object struct declarations
 // -----------------------------------------------
 
-
+struct Objo{
+  bool operator()(int n){
+    if( n < 170 ) return 0;
+    else return 1;
+  }
+};
 
 
 
@@ -86,7 +91,55 @@ int main(int argc, char* argv[])
     print(head);
 
     // Test out your linked list code
+    //testing llpivot
+    std::cout << "testing llpivot (y/n)?" << std::endl;
+    char yn;
+    std::cin >> yn;
+    Node* smaller = NULL; 
+    Node* bigger = NULL;
+    if(yn == 'y'){
+      std::cout << "enter a pivot now" << std::endl;
+      int next$;
+      std::cin >> next$;
+      llpivot(head, smaller, bigger, next$);
+      std::cout << "smaller: ";
+      print(smaller);
+      std::cout << "larger: ";
+      print(bigger);
+    }
 
+    //deleting the list
+    Node *currnode = smaller;
+    while(currnode != NULL){
+      Node* tnode = currnode;
+      currnode = currnode->next;
+      delete tnode;
+    }
+    currnode = bigger;
+    while(currnode != NULL){
+      Node* tnode = currnode;
+      currnode = currnode->next;
+      delete tnode;
+    }
+
+
+    //testing llfilter
+    head = NULL;
+    head = readList(argv[1]);
+    std::cout << "about to test llfilter list is: " << std::endl ;
+    print(head);
+    Objo jake;
+    head = llfilter<Objo>(head, jake);
+    std::cout << "after calling llfilter on all items less than 170: ";
+    print(head);
+
+    //deleting the list
+    currnode = head;
+    while(currnode != NULL){
+      Node* tnode = currnode;
+      currnode = currnode->next;
+      delete tnode;
+    }
 
 
     

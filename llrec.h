@@ -4,6 +4,8 @@
 #define NULL 0
 #endif
 
+#include <iostream>
+
 /**
  * Node struct for both problems
  */
@@ -83,8 +85,25 @@ Node* llfilter(Node* head, Comp pred)
     //*********************************************
     // Provide your implementation below
     //*********************************************
-
-
+    //return a pointer to the next good node 
+    if(head == NULL) return NULL;
+    //want to return a list that has only the nodes for which pred(node->val) returns true;
+    //should we make a new list? or just remove elements from the old list and return the old list?
+    Node* rnode = NULL;
+    if(pred(head->val)){
+        Node* tnode = head;
+        head = head->next;
+        delete tnode;
+        rnode = llfilter(head, pred);
+    }
+    else{
+        rnode = new Node(head->val, NULL);
+        Node* tnode = head;
+        head = head->next;
+        delete tnode;
+        rnode->next = llfilter(head, pred);
+    }
+    return rnode;
 }
 
 #endif
